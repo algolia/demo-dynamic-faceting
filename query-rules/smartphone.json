@@ -1,0 +1,17 @@
+{
+  "condition": {
+    "pattern": "smartphone",
+    "anchoring": "contains"
+  },
+  "consequence": {
+    "userData": {
+      "type": "dynamic_facets",
+      "facets": [
+        "brand",
+        "price"
+      ]
+    }
+  },
+  "description": "Facets for smartphone",
+  "objectID": "1524142281631"
+}

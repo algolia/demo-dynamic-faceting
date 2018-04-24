@@ -1,0 +1,17 @@
+{
+  "condition": {
+    "pattern": "iphone",
+    "anchoring": "contains"
+  },
+  "consequence": {
+    "userData": {
+      "type": "dynamic_facets",
+      "facets": [
+        "categories",
+        "type"
+      ]
+    }
+  },
+  "description": "Facets for iPhone",
+  "objectID": "1524142138188"
+}
