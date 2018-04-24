@@ -75,14 +75,12 @@ search.addWidget({
         search.removeWidgets(toDeleteRefs)
         toDeleteAttrs.forEach(attr => delete widgets[attr])
       }
-      console.warn('1. widgets', widgets)
 
       // add new attributes
       const toAdd = facets.filter(attr => !widgets.hasOwnProperty(attr)).map(attr => { widgets[attr] = createWidget(attr); return widgets[attr]; })
       if (toAdd.length > 0) {
         search.addWidgets(toAdd)
       }
-      console.warn('2. widgets', widgets)
     }
   }
 })
