@@ -7,7 +7,6 @@ const search = instantsearch({
   indexName: 'prod_dynamic-faceting',
   routing: false,
 })
-const realIS = search
 
 // initialize SearchBox
 search.addWidget(
@@ -55,32 +54,38 @@ search.addWidget(
 
 // handle dynamic facets
 let widgets = {}
-search.addWidget({
-  render: renderOptions => {
-    const results = renderOptions.results
 
-    if (results.userData && results.userData[0].type === 'dynamic_facets') {
-      // retrieve facet list
-      const facets = results.userData[0].facets
+search.on('render', () => {
+  const results = search.helper.lastResults
 
-      if (JSON.stringify(facets) === JSON.stringify(Object.keys(widgets))) {
-        console.info('blocked same query')
-        return
-      }
+  if (results.userData && results.userData[0].type === 'dynamic_facets') {
+    // retrieve facet list
+    const facets = results.userData[0].facets
 
-      // remove old attributes
-      const toDeleteAttrs = Object.keys(widgets).filter(attr => !facets.includes(attr))
-      if (toDeleteAttrs.length > 0) {
-        const toDeleteRefs = toDeleteAttrs.map(attr => widgets[attr])
-        search.removeWidgets(toDeleteRefs)
-        toDeleteAttrs.forEach(attr => delete widgets[attr])
-      }
+    if (JSON.stringify(facets) === JSON.stringify(Object.keys(widgets))) {
+      return
+    }
 
-      // add new attributes
-      const toAdd = facets.filter(attr => !widgets.hasOwnProperty(attr)).map(attr => { widgets[attr] = createWidget(attr); return widgets[attr]; })
-      if (toAdd.length > 0) {
-        search.addWidgets(toAdd)
-      }
+    // remove old attributes
+    const toDeleteAttrs = Object.keys(widgets).filter(attr => !facets.includes(attr))
+    if (toDeleteAttrs.length > 0) {
+      const toDeleteRefs = toDeleteAttrs.map(attr => widgets[attr])
+      search.removeWidgets(toDeleteRefs)
+      toDeleteAttrs.forEach(attr => delete widgets[attr])
+    }
+
+    // add new attributes
+    const toAdd = facets.filter(attr => !widgets.hasOwnProperty(attr)).map(attr => { widgets[attr] = createWidget(attr); return widgets[attr]; })
+    if (toAdd.length > 0) {
+      search.addWidgets(toAdd)
+    }
+  }
+  else {
+    // delete all
+    const toDeleteRefs = Object.keys(widgets).map(attr => widgets[attr])
+    if (toDeleteRefs.length > 0) {
+      search.removeWidgets(toDeleteRefs)
+      widgets = {}
     }
   }
 })
