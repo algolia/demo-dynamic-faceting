@@ -62,10 +62,6 @@ search.on('render', () => {
     // retrieve facet list
     const facets = results.userData[0].facets
 
-    if (JSON.stringify(facets) === JSON.stringify(Object.keys(widgets))) {
-      return
-    }
-
     // remove old attributes
     const toDeleteAttrs = Object.keys(widgets).filter(attr => !facets.includes(attr))
     if (toDeleteAttrs.length > 0) {
