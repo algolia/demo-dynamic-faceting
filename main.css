@@ -61,6 +61,14 @@ body {
   background-color: rgba(254, 207, 80, .3);
 }
 
+.ais-Hits-item .image {
+  text-align: center;
+}
+
+.ais-Hits-item .name {
+  margin-top: 15px;
+}
+
 .ais-SearchBox-form {
   max-width: 500px;
 }

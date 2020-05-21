@@ -23,7 +23,7 @@ search.addWidget(
     templates: {
       item: `
         <div class="hit">
-          <img src="{{image}}" alt="Product image">
+          <div class="image"><img src="{{image}}" alt="Product image"></div>
           <div class="name">{{{_highlightResult.name.value}}}</div>
         </div>
       `,
