@@ -50,37 +50,40 @@ body {
   margin-bottom: 15px;
 }
 
-.ais-header {
-  color: #888;
-  font-size: 1.2em;
-  margin: 0 0 8px;
-}
-
-.left .ais-root {
-  margin-bottom: 20px;
-}
-
-.ais-hits {
+.ais-Hits {
   display: flex;
   flex-wrap: wrap;
   margin-top: 20px;
 }
 
-.ais-hits--item {
-  flex: 0 0 30%;
-  padding: 10px 20px 20px;
-  margin-bottom: 10px;
-  margin-right: 10px;
-  border: solid 1px #eee;
-  box-shadow: 0 0 3px #f6f6f6;
-  color: #333;
-}
-
-.ais-hits--item em {
+.ais-Hits-item em {
   font-style: normal;
   background-color: rgba(254, 207, 80, .3);
 }
 
-.ais-search-box {
+.ais-SearchBox-form {
   max-width: 500px;
+}
+
+.ais-SearchBox-input {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: #3a4570;
+}
+
+.ais-Pagination {
+  margin-top: 20px;
+}
+
+#price .ais-Panel-body {
+  max-width: 92%;
+  margin-left: 4%;
+}
+
+#refinement-lists > div {
+  margin-top: 20px;
+}
+
+#refinement-lists > div:nth-child(1) {
+  margin-top: 50px;
 }

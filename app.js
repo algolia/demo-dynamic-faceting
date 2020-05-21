@@ -1,9 +1,10 @@
-// Add here your javascript code
+const searchClient = algoliasearch(
+  '6B29BTPQED',
+  '49ae085a83962db19658af549b3bac7e' // search only API key, no ADMIN key
+)
 
 const search = instantsearch({
-  // Replace with your own values
-  appId: '6B29BTPQED',
-  apiKey: '49ae085a83962db19658af549b3bac7e', // search only API key, no ADMIN key
+  searchClient,
   indexName: 'prod_dynamic-faceting',
   routing: false,
 })
@@ -30,18 +31,19 @@ search.addWidget(
   })
 )
 
+const rangeSliderWithPanel = instantsearch.widgets.panel({
+  templates: {
+    header: 'Price',
+  },
+})(instantsearch.widgets.rangeSlider)
+
 search.addWidget(
-  instantsearch.widgets.rangeSlider({
+  rangeSliderWithPanel({
     container: '#price',
-    attributeName: 'price',
-    templates: {
-      header: 'Price'
-    },
+    attribute: 'price',
     tooltips: {
-      format: function(rawValue) {
-        return '$' + Math.round(rawValue).toLocaleString()
-      }
-    }
+      format: rawValue => '$' + Math.round(rawValue).toLocaleString()
+    },
   })
 )
 
@@ -87,21 +89,24 @@ search.on('render', () => {
   }
 })
 
-const createWidget = (attr) => {
+const createWidget = attr => {
+  const refinementListWithPanel = instantsearch.widgets.panel({
+    templates: {
+      header: attr,
+    },
+  })(instantsearch.widgets.refinementList)
+
   let container = document.getElementById(attr)
   if (!container) {
     container = document.createElement('div')
     container.id = attr
     document.getElementById('refinement-lists').appendChild(container)
   }
-  return instantsearch.widgets.refinementList({
+  return refinementListWithPanel({
     container: container,
-    attributeName: attr,
+    attribute: attr,
     operator: 'or',
     limit: 10,
-    templates: {
-      header: attr,
-    },
   })
 }
 
